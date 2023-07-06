@@ -1,0 +1,1 @@
+export type ContextType = { offsetX: number; offsetY: number };
