@@ -18,6 +18,7 @@ import PlayerMoving from "../characters/PlayerMoving";
 import PlayerBottomScreen from "../characters/PlayerBottomScreen";
 import BallS from "../events/BallS";
 import { useCollisions } from "../events/colision";
+
 const boxSize = 50;
 const { width, height } = Dimensions.get("window");
 
@@ -57,6 +58,8 @@ const ViewGameEngine = () => {
             colorOne="yellow"
             colorTwo="white"
             position={[10, 60]}
+            screenWidth={width}
+            screenHeight={height}
           />
           <NewBall
             durationX={10}
@@ -64,6 +67,8 @@ const ViewGameEngine = () => {
             colorOne="yellow"
             colorTwo="white"
             position={[1, 260]}
+            screenWidth={width}
+            screenHeight={height - 200}
           />
 
           <NewBall
@@ -72,6 +77,8 @@ const ViewGameEngine = () => {
             colorOne="yellow"
             colorTwo="white"
             position={[100, 100]}
+            screenWidth={width}
+            screenHeight={height}
           />
           <NewBall
             durationX={10}
@@ -79,6 +86,8 @@ const ViewGameEngine = () => {
             colorOne="yellow"
             colorTwo="white"
             position={[200, 200]}
+            screenWidth={width}
+            screenHeight={height - 200}
           />
         </>
       ),
@@ -90,13 +99,13 @@ const ViewGameEngine = () => {
     },
 
     playerMoving: {
-      position: [50, 150],
+      position: trackPositions,
       radius: 30,
       speed: [-1, -1],
       renderer: () => (
         <PlayerMoving
-          position={[50, 150]}
-          onUpdatePlayerPosition={(x: number = 50, y: number = 10) =>
+          position={trackPositions}
+          onUpdatePlayerPosition={(x: number, y: number) =>
             setTrackPositions([x, y])
           }
           width={width}
@@ -111,9 +120,9 @@ const ViewGameEngine = () => {
       renderer: () => (
         <PlayerBottomScreen
           position={[50, 150]}
-          onUpdatePlayerPosition={(x: number, y: number) =>
-            setTrackPositions([x, y])
-          }
+          // onUpdatePlayerPosition={(x: number, y: number) =>
+          //   setTrackPositions([x, y])
+          // }
           width={width}
           height={height}
         />
@@ -135,17 +144,17 @@ const ViewGameEngine = () => {
     },
   };
   const entityKeys: EntityKey[] = [
-    "player",
+    // "player",
     "enemy",
     //"playerMoving",
     // "playerBottomScreen",
   ];
   const { onCollision } = useCollisions(entities2);
   useEffect(() => {
-    if (onCollision("playerMoving", "ball1")) {
+    if (onCollision(trackPositions, "ball1")) {
       console.log("Collision detected!");
     }
-  }, [onCollision, onCollision("playerMoving", "ball1")]);
+  }, [onCollision, trackPositions]);
   return (
     <View style={styles.container}>
       <GameEngine systems={[movementSystem]} entities={entities2}>

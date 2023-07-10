@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, ImageBackground } from "react-native";
 import { PlayerProps } from "../../interfaces/characters";
 import Animated, {
@@ -36,7 +36,9 @@ const PlayerMoving: React.FC<PlayerProps> = ({
       if (boxY.value < 0 || boxY.value > height - boxSize) {
         boxY.value = withSpring(0);
       }
-      onUpdatePlayerPosition(boxX.value, boxY.value);
+      //   if (onUpdatePlayerPosition) {
+      //     onUpdatePlayerPosition(boxX.value, boxY.value);
+      //   }
     },
   });
 
@@ -52,7 +54,14 @@ const PlayerMoving: React.FC<PlayerProps> = ({
       ],
     };
   });
-
+  useEffect(() => {
+    //   onUpdatePlayerPosition(boxX.value, boxY.value);
+    // console.log("Player Moving X :", boxX.value);
+    // console.log("Player Moving Y :", boxY.value);
+    if (onUpdatePlayerPosition) {
+      onUpdatePlayerPosition(boxX.value, boxY.value);
+    }
+  }, [boxX.value, boxY.value]);
   return (
     <PanGestureHandler onGestureEvent={handleGesture}>
       <Animated.View style={[styles.player, animatedStyle]}>

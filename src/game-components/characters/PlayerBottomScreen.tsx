@@ -36,7 +36,9 @@ const PlayerBottomScreen: React.FC<PlayerProps> = ({
       if (boxX.value < 0 || boxX.value > width - boxSize - 50) {
         boxX.value = withSpring(0);
       }
-      onUpdatePlayerPosition(boxX.value, boxY.value);
+      //   if (onUpdatePlayerPosition) {
+      //     onUpdatePlayerPosition(boxX.value, boxY.value);
+      //   }
     },
   });
 
