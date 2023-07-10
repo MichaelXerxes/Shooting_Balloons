@@ -31,7 +31,7 @@ const NavigationView: React.FC<NavigationViewProps> = ({ drawer }) => {
       alignItems: "center",
 
       paddingVertical: 16,
-      paddingTop: 80,
+      paddingTop: 220,
       overflow: "hidden",
       width: "100%",
     },
@@ -40,23 +40,25 @@ const NavigationView: React.FC<NavigationViewProps> = ({ drawer }) => {
     },
     paragraph: {
       padding: 12,
-      fontSize: 28,
+      fontSize: 33,
       textAlign: "center",
+      color: colors.white,
     },
     drawerTouchable: {
-      borderBottomColor: colors.darkBlack,
+      borderBottomColor: colors.white,
       borderBottomWidth: 1,
       marginBottom: 10,
     },
     drawerTouchableText: {
-      fontSize: 22,
+      fontSize: 25,
       fontWeight: "bold",
+      color: colors.white,
     },
     buttonClose: {
       bottom: 140,
       position: "absolute",
       borderWidth: 2,
-      borderColor: colors.darkBlack,
+      borderColor: colors.white,
       borderRadius: 10,
       width: "80%",
       alignItems: "center",
@@ -65,9 +67,9 @@ const NavigationView: React.FC<NavigationViewProps> = ({ drawer }) => {
 
   return (
     <ImageBackground
-      source={require("../assets/buttons/expo.png")}
+      source={require("../assets/end-game/endgame3.png")}
       style={[styles.container, styles.navigationContainer]}
-      resizeMode="contain"
+      resizeMode="cover"
     >
       <Text style={styles.paragraph}>Quizzes Menu</Text>
 
@@ -97,7 +99,9 @@ const NavigationView: React.FC<NavigationViewProps> = ({ drawer }) => {
         }}
         style={styles.drawerTouchable}
       >
-        <Text style={styles.drawerTouchableText}>Scores</Text>
+        <Text style={[styles.drawerTouchableText, { color: colors.darkBlack }]}>
+          Scores
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => {

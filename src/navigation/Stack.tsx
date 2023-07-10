@@ -26,7 +26,10 @@ const MainStackNavigator: React.FC = () => {
         component={Home}
         options={{
           header: () => (
-            <TopBarComponent navigation={navigationSettings} title="Quizzes" />
+            <TopBarComponent
+              navigation={navigationSettings}
+              title="Game Menu"
+            />
           ),
           headerStyle: {
             backgroundColor: "green",

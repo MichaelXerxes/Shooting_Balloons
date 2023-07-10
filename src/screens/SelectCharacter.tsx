@@ -29,19 +29,32 @@ const SelectCharacter: React.FC<Props> = ({ navigation }) => {
   const anim3 = useRef(new Animated.Value(-500)).current;
   const isFocused = useIsFocused();
   const handleButtonPress = (buttonText: string) => {
-    // Handle button press logic
     console.log(`Button "${buttonText}" pressed`);
-    navigation.navigate("Game", { playerImageName: "char2.png" });
+    if (buttonText === "Button 1") {
+      navigation.navigate("Game", { playerImageName: 0 });
+    }
+    if (buttonText === "Button 2") {
+      navigation.navigate("Game", { playerImageName: 1 });
+    }
+    if (buttonText === "Button 3") {
+      navigation.navigate("Game", { playerImageName: 2 });
+    }
+    if (buttonText === "Button 4") {
+      navigation.navigate("Game", { playerImageName: 3 });
+    }
+    if (buttonText === "Button 5") {
+      navigation.navigate("Game", { playerImageName: 4 });
+    }
+    if (buttonText === "Button 6") {
+      navigation.navigate("Game", { playerImageName: 5 });
+    }
   };
 
   return (
     <ImageBackground
-      source={require("../assets/ai-images/endgame.jpg")}
+      source={require("../assets/ai-images/Hotpot.png")}
       style={styles.container}
     >
-      {/* <ViewGameEngine /> */}
-      {/* <CustomGameEngine /> */}
-
       <View style={styles.container2}>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
@@ -55,7 +68,8 @@ const SelectCharacter: React.FC<Props> = ({ navigation }) => {
             style={styles.button}
             onPress={() => handleButtonPress("Button 2")}
           >
-            <Text style={styles.buttonText}>Button 2</Text>
+            <ImageBackground source={characterTwo} style={styles.image} />
+            <Text style={styles.buttonText}>Blockers</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.buttonContainer}>
@@ -63,13 +77,15 @@ const SelectCharacter: React.FC<Props> = ({ navigation }) => {
             style={styles.button}
             onPress={() => handleButtonPress("Button 3")}
           >
-            <Text style={styles.buttonText}>Button 3</Text>
+            <ImageBackground source={characterThree} style={styles.image} />
+            <Text style={styles.buttonText}>Familly Guy</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
             onPress={() => handleButtonPress("Button 4")}
           >
-            <Text style={styles.buttonText}>Button 4</Text>
+            <ImageBackground source={characterFour} style={styles.image} />
+            <Text style={styles.buttonText}>Foxi</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.buttonContainer}>
@@ -77,13 +93,15 @@ const SelectCharacter: React.FC<Props> = ({ navigation }) => {
             style={styles.button}
             onPress={() => handleButtonPress("Button 5")}
           >
-            <Text style={styles.buttonText}>Button 5</Text>
+            <ImageBackground source={characterFive} style={styles.image} />
+            <Text style={styles.buttonText}>Kitti</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
             onPress={() => handleButtonPress("Button 6")}
           >
-            <Text style={styles.buttonText}>Button 6</Text>
+            <ImageBackground source={characterSix} style={styles.image} />
+            <Text style={styles.buttonText}>Drago</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -105,18 +123,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 100,
   },
-  ballContainer: {
-    marginBottom: 20,
-  },
-  category1: {
-    alignSelf: "flex-start",
-  },
-  category2: {
-    alignSelf: "flex-end",
-  },
-  category3: {
-    // alignSelf: "center",
-  },
+
   container2: {
     flex: 1,
     justifyContent: "center",
@@ -126,20 +133,22 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-evenly",
-    width: 200,
   },
   button: {
-    backgroundColor: "white",
+    backgroundColor: "rgba(255, 255, 255, 0.3)",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "black",
+    width: 130,
+    margin: 10,
   },
   buttonText: {
     color: "black",
     fontSize: 16,
     fontWeight: "bold",
+    textAlign: "center",
   },
 });
 export default SelectCharacter;

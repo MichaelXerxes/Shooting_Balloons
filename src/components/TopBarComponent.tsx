@@ -43,7 +43,7 @@ const TopBarComponent: React.FC<Props> = ({ navigation, title }) => {
   const styles = StyleSheet.create({
     container: {
       flexDirection: "row",
-      height: 75,
+      height: 80,
       width: "100%",
       paddingTop: 30,
       alignItems: "center",
@@ -55,7 +55,7 @@ const TopBarComponent: React.FC<Props> = ({ navigation, title }) => {
     title: {
       fontSize: 26,
       fontWeight: "bold",
-      color: colors.dark,
+      color: colors.white,
     },
     paddingIconLeft: {
       paddingLeft: 16,
@@ -64,7 +64,7 @@ const TopBarComponent: React.FC<Props> = ({ navigation, title }) => {
 
   return (
     <ImageBackground
-      source={require("../assets/ai-images/tab2.png")}
+      source={require("../assets/ai-images/hell.png")}
       style={styles.container}
     >
       {drawerPosition === "left" ? (
@@ -76,7 +76,11 @@ const TopBarComponent: React.FC<Props> = ({ navigation, title }) => {
           }
         >
           <TouchableOpacity onPress={handleBackPress}>
-            <Icon name="long-arrow-alt-left" size={DIMENSIONS.iconSize} />
+            <Icon
+              name="long-arrow-alt-left"
+              size={DIMENSIONS.iconSize}
+              color={colors.white}
+            />
           </TouchableOpacity>
         </View>
       ) : (
@@ -85,7 +89,11 @@ const TopBarComponent: React.FC<Props> = ({ navigation, title }) => {
             onPress={openDrawer}
             style={styles.paddingIconRight}
           >
-            <Icon name="indent" size={DIMENSIONS.iconSize} />
+            <Icon
+              name="indent"
+              size={DIMENSIONS.iconSize}
+              color={colors.white}
+            />
           </TouchableOpacity>
         </View>
       )}
@@ -104,7 +112,11 @@ const TopBarComponent: React.FC<Props> = ({ navigation, title }) => {
             onPress={openDrawer}
             style={styles.paddingIconRight}
           >
-            <Icon name="indent" size={DIMENSIONS.iconSize} />
+            <Icon
+              name="indent"
+              size={DIMENSIONS.iconSize}
+              color={colors.white}
+            />
           </TouchableOpacity>
         </View>
       ) : (
@@ -116,7 +128,11 @@ const TopBarComponent: React.FC<Props> = ({ navigation, title }) => {
           }
         >
           <TouchableOpacity onPress={handleBackPress}>
-            <Icon name="long-arrow-alt-right" size={DIMENSIONS.iconSize} />
+            <Icon
+              name="long-arrow-alt-right"
+              size={DIMENSIONS.iconSize}
+              color={colors.white}
+            />
           </TouchableOpacity>
         </View>
       )}

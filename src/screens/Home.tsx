@@ -31,7 +31,7 @@ const Home: React.FC<Props> = ({ navigation }) => {
     Maincontainer: {
       flex: 1,
       alignItems: "center",
-      // justifyContent: "center",
+      justifyContent: "center",
     },
     container: {
       flex: 1,
@@ -44,16 +44,16 @@ const Home: React.FC<Props> = ({ navigation }) => {
     },
     testPlayGame: {
       color: "white",
-      fontSize: 16,
+      fontSize: 25,
       fontWeight: "bold",
     },
     buttonPlay: {
       width: 300,
-      height: 50,
+      height: 55,
       justifyContent: "center",
       alignContent: "center",
       borderColor: "white",
-      borderWidth: 1.5,
+      borderWidth: 2.5,
       borderRadius: 10,
       alignItems: "center",
     },
@@ -64,7 +64,7 @@ const Home: React.FC<Props> = ({ navigation }) => {
   };
   return (
     <ImageBackground
-      source={require("../assets/ai-images/space.png")}
+      source={require("../assets/end-game/edngame1.png")}
       style={styles.Maincontainer}
     >
       <TouchableOpacity style={styles.buttonPlay} onPress={() => playGame()}>

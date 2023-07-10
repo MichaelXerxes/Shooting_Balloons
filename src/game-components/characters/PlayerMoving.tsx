@@ -87,6 +87,7 @@ const PlayerMoving: React.FC<PlayerProps> = ({
           // source={playerImageMap[playerImageName]}
           source={imageArray[playerImageName]}
           style={styles.box}
+          resizeMode="contain"
         />
       </Animated.View>
     </PanGestureHandler>

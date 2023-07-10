@@ -1,22 +1,25 @@
 import React from "react";
-import { View, StyleSheet, ImageBackground, Animated } from "react-native";
-import { GameScreenNavigationProp } from "../types/navigation.types";
+import { StyleSheet, ImageBackground, Animated } from "react-native";
+import {
+  GameScreenNavigationProp,
+  GameScreenRouteProp,
+} from "../types/navigation.types";
 
 import CustomGameEngine from "../game-Engine/CustomGameEngine";
 interface Props {
   navigation: GameScreenNavigationProp;
-  //playerImageName: string;
+  route: GameScreenRouteProp;
 }
 
-const Game: React.FC<Props> = ({ navigation }) => {
+const Game: React.FC<Props> = ({ navigation, route }) => {
+  const { playerImageName } = route.params;
+
   return (
     <ImageBackground
-      source={require("../assets/ai-images/marksq.png")}
+      source={require("../assets/end-game/back10.png")}
       style={styles.container}
     >
-      <CustomGameEngine
-      //playerImageName={playerImageName}
-      />
+      <CustomGameEngine playerImageName={playerImageName} />
     </ImageBackground>
   );
 };
