@@ -12,6 +12,7 @@ export interface BallProps{
     directionValueX?:number;
     directionValueY?:number;
     position: [number, number];
+    radius:number;
 };
 
 export  interface NewBallRendererProps {

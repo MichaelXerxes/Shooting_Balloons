@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import Game from "../screens/Game";
 import Home from "../screens/Home";
 import SelectCharacter from "../screens/SelectCharacter";
+import CustomGameEngine from "../game-Engine/CustomGameEngine";
 import TopBarComponent from "../components/TopBarComponent";
 import drawerStore from "../mobx/DrawerStore";
 import {
@@ -61,15 +62,18 @@ const MainStackNavigator: React.FC = () => {
       >
         {(props) => <Settings {...props} />}
       </Stack.Screen> */}
-      {/* <Stack.Screen
-        name="Scores"
-        component={Scores}
+      <Stack.Screen
+        name="CustomGameEngine"
+        component={CustomGameEngine}
         options={{
           header: () => (
-            <TopBarComponent navigation={navigationSettings} title="Scores" />
+            <TopBarComponent
+              navigation={navigationSettings}
+              title="Game Start"
+            />
           ),
         }}
-      /> */}
+      />
       <Stack.Screen
         name="Game"
         component={Game}

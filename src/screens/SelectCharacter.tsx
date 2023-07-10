@@ -9,6 +9,7 @@ import {
 import { SelectCharacterScreenNavigationProp } from "../types/navigation.types";
 import { useIsFocused } from "@react-navigation/native";
 import ViewGameEngine from "../game-components/testing/ViewGameEngine";
+import CustomGameEngine from "../game-Engine/CustomGameEngine";
 interface Props {
   navigation: SelectCharacterScreenNavigationProp;
 }
@@ -25,7 +26,8 @@ const SelectCharacter: React.FC<Props> = ({ navigation }) => {
       source={require("../assets/ai-images/endgame.jpg")}
       style={styles.container}
     >
-      <ViewGameEngine />
+      {/* <ViewGameEngine /> */}
+      <CustomGameEngine />
     </ImageBackground>
   );
 };

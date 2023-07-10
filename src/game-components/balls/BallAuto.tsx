@@ -1,22 +1,24 @@
 import React, { useEffect } from "react";
-import { Dimensions, StyleSheet, View } from "react-native";
-import { GameEngine } from "react-native-game-engine";
-import { PanGestureHandler } from "react-native-gesture-handler";
+import { Dimensions, StyleSheet } from "react-native";
 import Animated, {
-  useAnimatedGestureHandler,
-  useAnimatedStyle,
   useSharedValue,
+  useAnimatedStyle,
   withSpring,
+  withDelay,
+  useDerivedValue,
+  runOnJS,
   withTiming,
+  Easing,
 } from "react-native-reanimated";
-import { ContextType } from "../../types/types";
+import { withBouncing } from "react-native-redash";
 import { BallProps } from "../../interfaces/ballInterface";
-const size = 50;
-const NewBall: React.FC<BallProps> = ({
+const { height, width } = Dimensions.get("window");
+
+const BallAuto: React.FC<BallProps> = ({
   durationX,
   durationY,
-  ballSize = size,
-  colorOne = "red",
+  ballSize = 50,
+  colorOne = "pink",
   colorTwo = "blue",
   //   initialStartX = 0,
   //   initialStartY = 0,
@@ -27,6 +29,17 @@ const NewBall: React.FC<BallProps> = ({
   position,
   radius = 25,
 }) => {
+  const styles = StyleSheet.create({
+    ball: {
+      position: "absolute",
+      left: position[0] - radius,
+      top: position[1] - radius,
+      width: radius * 2,
+      height: radius * 2,
+      borderRadius: radius,
+      backgroundColor: colorOne,
+    },
+  });
   const [x = 0, y = 0] = position;
   const boxX = useSharedValue(x);
   const boxY = useSharedValue(y);
@@ -75,26 +88,8 @@ const NewBall: React.FC<BallProps> = ({
       backgroundColor: backgroundColor.value,
     };
   });
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    ball: {
-      position: "absolute",
-      left: position[0] - radius,
-      top: position[1] - radius,
-      width: radius * 2,
-      height: radius * 2,
-      borderRadius: radius,
-      backgroundColor: colorOne,
-    },
-  });
 
-  return (
-    <View>
-      <Animated.View style={[styles.ball, animatedStyle]} />
-    </View>
-  );
+  return <Animated.View style={[styles.ball, animatedStyle]} />;
 };
 
-export default NewBall;
+export default BallAuto;
