@@ -1,5 +1,4 @@
 # Shooting_Balloons
-# There were supposed to be balloons, but there will be monsters and princesses ...
 <h2 align="center">Shooting_Balloons</h2>
 <p align="center">There were supposed to be balloons, but there will be monsters and princesses ....</p>
 
