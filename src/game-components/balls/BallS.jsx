@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet,ImageBackground } from "react-native";
 
 const BallS = ({ position, radius, color }) => {
   const ballStyle = {
@@ -9,10 +9,20 @@ const BallS = ({ position, radius, color }) => {
     width: radius * 2,
     height: radius * 2,
     borderRadius: radius,
-    backgroundColor: color,
+    backgroundColor: "transparent",
   };
 
-  return <View style={ballStyle} />;
+  return <View style={ballStyle} >
+     <ImageBackground
+        source={require("../../assets/monsters/mon2.png")}
+        style={styles.box}
+      />
+  </View>;
 };
+const styles=StyleSheet.create({
+  box:{
+    width:50,height:50
+  }
+})
 
 export default BallS;

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions, StyleSheet, ImageBackground } from "react-native";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -38,6 +38,10 @@ const BallAuto: React.FC<BallProps> = ({
       height: radius * 2,
       borderRadius: radius,
       backgroundColor: colorOne,
+    },
+    box: {
+      width: 50,
+      height: 50,
     },
   });
   const [x = 0, y = 0] = position;
@@ -85,11 +89,19 @@ const BallAuto: React.FC<BallProps> = ({
           translateY: boxY.value,
         },
       ],
-      backgroundColor: backgroundColor.value,
+      backgroundColor: "transparent",
+      //backgroundColor.value,
     };
   });
 
-  return <Animated.View style={[styles.ball, animatedStyle]} />;
+  return (
+    <Animated.View style={[styles.ball, animatedStyle]}>
+      <ImageBackground
+        source={require("../../assets/monsters/mon1.png")}
+        style={styles.box}
+      />
+    </Animated.View>
+  );
 };
 
 export default BallAuto;

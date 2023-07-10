@@ -12,65 +12,68 @@ interface returnEntityInterface {
   width: number;
   height: number;
   playerPosition: [number, number];
+  playerImageName: number;
 }
 
 const returnEntity = ({
   width,
   height,
   playerPosition: trackedPosition,
+  playerImageName,
 }: returnEntityInterface): Entities => {
   const [trackPositions, setTrackPositions] =
     useState<[number, number]>(trackedPosition);
 
   const entities: Entities = {
-    player: {
-      position: [0, 0],
-      speed: [1, 1],
-      renderer: () => (
-        <>
-          <BallAuto
-            durationX={10}
-            durationY={10}
-            radius={25}
-            screenWidth={width}
-            screenHeight={height}
-            position={[25, 25]}
-            colorOne="black"
-            colorTwo="grey"
-          />
-          <BallAuto
-            durationX={10}
-            durationY={10}
-            radius={25}
-            screenWidth={width}
-            screenHeight={height}
-            position={[0, 0]}
-          />
+    // player: {
+    //   position: [0, 0],
+    //   speed: [1, 1],
+    //   renderer: () => (
+    //     <>
+    //       <BallAuto
+    //         durationX={10}
+    //         durationY={10}
+    //         radius={25}
+    //         screenWidth={width}
+    //         screenHeight={height}
+    //         position={[25, 25]}
+    //         colorOne="black"
+    //         colorTwo="grey"
+    //       />
+    //       <BallAuto
+    //         durationX={10}
+    //         durationY={10}
+    //         radius={25}
+    //         screenWidth={width}
+    //         screenHeight={height}
+    //         position={[0, 0]}
+    //       />
 
-          <BallAuto
-            durationX={10}
-            durationY={10}
-            radius={25}
-            screenWidth={width}
-            screenHeight={height}
-            position={[5, 5]}
-          />
-          <BallAuto
-            durationX={10}
-            durationY={10}
-            radius={25}
-            screenWidth={width}
-            screenHeight={height}
-            position={[20, 20]}
-          />
-        </>
-      ),
-    },
-    // enemy: {
-    //   position: [100, 100],
-    //   speed: [-1, -1],
-    //   renderer: () => <Enemy position={[100, 100]} />,
+    //       <BallAuto
+    //         durationX={10}
+    //         durationY={10}
+    //         radius={25}
+    //         screenWidth={width}
+    //         screenHeight={height}
+    //         position={[5, 5]}
+    //       />
+    //       <BallAuto
+    //         durationX={10}
+    //         durationY={10}
+    //         radius={25}
+    //         screenWidth={width}
+    //         screenHeight={height}
+    //         position={[20, 20]}
+    //       />
+    //     </>
+    //   ),
     // },
+    enemy: {
+      position: [100, 100],
+      speed: [-1, -1],
+      radius: 15,
+      renderer: () => <Enemy position={[100, 100]} />,
+    },
 
     playerMoving: {
       position: trackPositions,
@@ -85,6 +88,7 @@ const returnEntity = ({
           width={width}
           height={height}
           radius={30}
+          playerImageNameIndex={playerImageName}
         />
       ),
     },
@@ -99,22 +103,32 @@ const returnEntity = ({
         />
       ),
     },
-    // ball1: {
-    //   position: [100, 200],
-    //   radius: 30,
-    //   speed: [-1, -1],
-    //   color: "red",
-    //   renderer: () => <BallS position={[100, 200]} radius={30} color="red" />,
-    // },
-    // ball2: {
-    //   position: [200, 300],
-    //   radius: 50,
-    //   speed: [-1, -1],
-    //   color: "blue",
-    //   renderer: () => <BallS position={[200, 300]} radius={50} color="blue" />,
-    // },
+    ball1: {
+      position: [100, 200],
+      radius: 30,
+      speed: [-1, -1],
+      color: "red",
+      renderer: () => <BallS position={[100, 200]} radius={30} color="red" />,
+    },
+    ball2: {
+      position: [200, 300],
+      radius: 25,
+      speed: [-1, -1],
+      color: "blue",
+      renderer: () => (
+        <BallAuto
+          durationX={50}
+          durationY={50}
+          radius={25}
+          screenWidth={width}
+          screenHeight={height}
+          position={[20, 20]}
+          colorOne="blue"
+        />
+      ),
+    },
     ballAuto: {
-      position: [200, 200],
+      position: [20, 20],
       radius: 25,
       speed: [-1, -2],
       color: "lightgrey",
@@ -125,25 +139,25 @@ const returnEntity = ({
           radius={25}
           screenWidth={width}
           screenHeight={height}
-          position={[250, 250]}
+          position={[25, 25]}
         />
       ),
     },
   };
   const { onCollision } = useCollisions(entities);
   useEffect(() => {
-    // if (onCollision(trackPositions, "ball1")) {
-    //   console.log("Collision detected! ball1");
-    // }
-    // if (onCollision(trackPositions, "ball2")) {
-    //   console.log("Collision detected! ball2");
-    // }
-    if (onCollision(trackPositions, "player")) {
-      console.log("Collision detected! player");
+    if (onCollision(trackPositions, "ball1")) {
+      console.log("Collision detected! ball1");
     }
-    // if (onCollision(trackPositions, "enemy")) {
-    //   console.log("Collision detected! enemy");
+    if (onCollision(trackPositions, "ball2")) {
+      console.log("Collision detected! ball2");
+    }
+    // if (onCollision(trackPositions, "player")) {
+    //   console.log("Collision detected! player");
     // }
+    if (onCollision(trackPositions, "enemy")) {
+      console.log("Collision detected! enemy");
+    }
     if (onCollision(trackPositions, "ballAuto")) {
       console.log("Collision detected!  ballAuto");
     }

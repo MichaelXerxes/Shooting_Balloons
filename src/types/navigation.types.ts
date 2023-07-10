@@ -5,7 +5,7 @@ export type RootStackParamList = {
   SelectCharacter: { quizType: string } | undefined;
   Settings: undefined;
   Scores: undefined;
-  Game: undefined;
+  Game: {playerImageName: string;};
   Quiz: { quizType: string; numberQuestions: number };
   EndGame: undefined;
 
@@ -33,7 +33,12 @@ export type ScoreScreenNavigationProp = StackNavigationProp<
 export type GameScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
   "Game"
->;
+>& {
+  navigate: (
+    screen: "Game",
+    params: { playerImageName: string }
+  ) => void;
+};
 export type QuizScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
   "Quiz"

@@ -7,8 +7,10 @@ import { GameEngineUpdate } from "../interfaces/gameEngine";
 
 const boxSize = 50;
 const { width, height } = Dimensions.get("window");
-
-const CustomGameEngine = () => {
+interface Props {
+  playerImageName?: number;
+}
+const CustomGameEngine: React.FC<Props> = ({ playerImageName = 1 }) => {
   const [trackPositions, setTrackPositions] = useState<[number, number]>([
     0, 0,
   ]);
@@ -16,11 +18,16 @@ const CustomGameEngine = () => {
     entities: Entities,
     { time, delta }: GameEngineUpdate
   ) => {
-    const { player, enemy, ball1, ball2 } = entities;
+    const {
+      // player,
+      enemy,
+      ball1,
+      ball2,
+    } = entities;
 
     if (time && delta) {
-      player.position[0] += player.speed[0] * delta;
-      player.position[1] += player.speed[1] * delta;
+      //   player.position[0] += player.speed[0] * delta;
+      //   player.position[1] += player.speed[1] * delta;
 
       enemy.position[0] += enemy.speed[0] * delta;
       enemy.position[1] += enemy.speed[1] * delta;
@@ -32,6 +39,7 @@ const CustomGameEngine = () => {
     width,
     height,
     playerPosition: trackPositions,
+    playerImageName: playerImageName,
   });
   const entityKeys: EntityKey[] = [
     // "player",

@@ -4,6 +4,7 @@ export interface PlayerProps {
     width:number;
     height:number;
     radius?:number;
+    playerImageNameIndex?: number;
   }
 
 

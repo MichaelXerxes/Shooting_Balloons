@@ -9,11 +9,20 @@ import Animated, {
 } from "react-native-reanimated";
 import { ContextType } from "../../types/types";
 import { PanGestureHandler } from "react-native-gesture-handler";
+import {
+  characterOne,
+  characterTwo,
+  characterThree,
+  characterFour,
+  characterFive,
+  characterSix,
+} from "../../consts/IMAGES";
 const PlayerMoving: React.FC<PlayerProps> = ({
   position,
   width,
   height,
   onUpdatePlayerPosition,
+  playerImageNameIndex: playerImageName = 4,
 }) => {
   const [x = 50, y = 50] = position;
   const boxSize = 50;
@@ -62,11 +71,21 @@ const PlayerMoving: React.FC<PlayerProps> = ({
       onUpdatePlayerPosition(boxX.value, boxY.value);
     }
   }, [boxX.value, boxY.value]);
+
+  const imageArray = [
+    characterOne,
+    characterTwo,
+    characterThree,
+    characterFour,
+    characterFive,
+    characterSix,
+  ];
   return (
     <PanGestureHandler onGestureEvent={handleGesture}>
       <Animated.View style={[styles.player, animatedStyle]}>
         <ImageBackground
-          source={require("../../assets/characters/animeCh1.png")}
+          // source={playerImageMap[playerImageName]}
+          source={imageArray[playerImageName]}
           style={styles.box}
         />
       </Animated.View>

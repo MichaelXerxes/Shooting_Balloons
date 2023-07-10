@@ -1,10 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { View, StyleSheet, ImageBackground, Animated } from "react-native";
 import { GameScreenNavigationProp } from "../types/navigation.types";
-import { useIsFocused } from "@react-navigation/native";
 
+import CustomGameEngine from "../game-Engine/CustomGameEngine";
 interface Props {
   navigation: GameScreenNavigationProp;
+  //playerImageName: string;
 }
 
 const Game: React.FC<Props> = ({ navigation }) => {
@@ -12,7 +13,11 @@ const Game: React.FC<Props> = ({ navigation }) => {
     <ImageBackground
       source={require("../assets/ai-images/marksq.png")}
       style={styles.container}
-    ></ImageBackground>
+    >
+      <CustomGameEngine
+      //playerImageName={playerImageName}
+      />
+    </ImageBackground>
   );
 };
 

@@ -75,7 +75,7 @@ const PlayerBottomScreen: React.FC<PlayerProps> = ({
 const styles = StyleSheet.create({
   player: {
     position: "absolute",
-    bottom: 30,
+    bottom: 50,
     width: 50,
     height: 50,
     backgroundColor: "transparent",
