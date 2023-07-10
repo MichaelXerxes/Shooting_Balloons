@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import { GameEngine } from "react-native-game-engine";
 import { PanGestureHandler } from "react-native-gesture-handler";
@@ -9,11 +9,160 @@ import Animated, {
   withSpring,
   withTiming,
 } from "react-native-reanimated";
-import { ContextType } from "../../types/types";
+import { ContextType, Entities, EntityKey } from "../../types/types";
 import NewBall from "../balls/NewBall";
+import { Entity, GameEngineUpdate } from "../../interfaces/gameEngine";
+// import Player from "../characters/Player";
+import Enemy from "../characters/Enemy";
+import PlayerMoving from "../characters/PlayerMoving";
+import PlayerBottomScreen from "../characters/PlayerBottomScreen";
+import BallS from "../events/BallS";
+import { useCollisions } from "../events/colision";
 const boxSize = 50;
 const { width, height } = Dimensions.get("window");
 
+const ViewGameEngine = () => {
+  const [trackPositions, setTrackPositions] = useState<[number, number]>([
+    0, 0,
+  ]);
+  const movementSystem = (
+    entities: Entities,
+    { time, delta }: GameEngineUpdate
+  ) => {
+    const { player, enemy, ball1, ball2 } = entities;
+
+    if (time && delta) {
+      player.position[0] += player.speed[0] * delta;
+      player.position[1] += player.speed[1] * delta;
+
+      enemy.position[0] += enemy.speed[0] * delta;
+      enemy.position[1] += enemy.speed[1] * delta;
+    }
+    // console.log("Player position:", player.position);
+    // console.log("Ball 1 position:", ball1.position);
+    // console.log("Ball 2 position:", ball2.position);
+
+    return entities;
+  };
+
+  const entities2: Entities = {
+    player: {
+      position: [0, 0],
+      speed: [1, 1],
+      renderer: () => (
+        <>
+          <NewBall
+            durationX={10}
+            durationY={20}
+            colorOne="yellow"
+            colorTwo="white"
+            position={[10, 60]}
+          />
+          <NewBall
+            durationX={10}
+            durationY={20}
+            colorOne="yellow"
+            colorTwo="white"
+            position={[1, 260]}
+          />
+
+          <NewBall
+            durationX={10}
+            durationY={20}
+            colorOne="yellow"
+            colorTwo="white"
+            position={[100, 100]}
+          />
+          <NewBall
+            durationX={10}
+            durationY={20}
+            colorOne="yellow"
+            colorTwo="white"
+            position={[200, 200]}
+          />
+        </>
+      ),
+    },
+    enemy: {
+      position: [100, 100],
+      speed: [-1, -1],
+      renderer: () => <Enemy position={[100, 100]} />,
+    },
+
+    playerMoving: {
+      position: [50, 150],
+      radius: 30,
+      speed: [-1, -1],
+      renderer: () => (
+        <PlayerMoving
+          position={[50, 150]}
+          onUpdatePlayerPosition={(x: number = 50, y: number = 10) =>
+            setTrackPositions([x, y])
+          }
+          width={width}
+          height={height}
+          radius={30}
+        />
+      ),
+    },
+    playerBottomScreen: {
+      position: [50, 150],
+      speed: [-1, -1],
+      renderer: () => (
+        <PlayerBottomScreen
+          position={[50, 150]}
+          onUpdatePlayerPosition={(x: number, y: number) =>
+            setTrackPositions([x, y])
+          }
+          width={width}
+          height={height}
+        />
+      ),
+    },
+    ball1: {
+      position: [100, 200],
+      radius: 30,
+      speed: [-1, -1],
+      color: "red",
+      renderer: () => <BallS position={[100, 200]} radius={30} color="red" />,
+    },
+    ball2: {
+      position: [200, 300],
+      radius: 50,
+      speed: [-1, -1],
+      color: "blue",
+      renderer: () => <BallS position={[200, 300]} radius={50} color="blue" />,
+    },
+  };
+  const entityKeys: EntityKey[] = [
+    "player",
+    "enemy",
+    //"playerMoving",
+    // "playerBottomScreen",
+  ];
+  const { onCollision } = useCollisions(entities2);
+  useEffect(() => {
+    if (onCollision("playerMoving", "ball1")) {
+      console.log("Collision detected!");
+    }
+  }, [onCollision, onCollision("playerMoving", "ball1")]);
+  return (
+    <View style={styles.container}>
+      <GameEngine systems={[movementSystem]} entities={entities2}>
+        {/* <NewBall position={[0, 0]} durationX={10} durationY={20} /> */}
+        {/* <Enemy position={[100, 100]} /> */}
+        {entityKeys.map((key) => {
+          const entity = entities2[key];
+          return (
+            <React.Fragment key={key}>
+              {entity.renderer && entity.renderer()}
+            </React.Fragment>
+          );
+        })}
+      </GameEngine>
+    </View>
+  );
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -38,147 +187,4 @@ const styles = StyleSheet.create({
     backgroundColor: "yellow",
   },
 });
-
-const ViewGameEngine = () => {
-  const boxX = useSharedValue(0);
-  const boxY = useSharedValue(0);
-
-  const box1X = useSharedValue(5);
-  const box1Y = useSharedValue(10);
-
-  const autoBoxX = useSharedValue(0);
-  const autoBoxY = useSharedValue(height / 2 - boxSize / 2);
-  const direction = useSharedValue(1);
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      autoBoxX.value = withTiming(autoBoxX.value + 1 * direction.value, {
-        duration: 10,
-      });
-      if (autoBoxX.value > width - boxSize) {
-        direction.value = -1;
-      }
-      if (autoBoxX.value < 0) {
-        direction.value = 1;
-      }
-    }, 20);
-
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [autoBoxX]);
-
-  const handleGesture = useAnimatedGestureHandler({
-    onStart: (_, ctx: ContextType) => {
-      ctx.offsetX = boxX.value;
-      ctx.offsetY = boxY.value;
-    },
-    onActive: (event, ctx) => {
-      boxX.value = event.translationX + ctx.offsetX;
-      boxY.value = event.translationY + ctx.offsetY;
-    },
-    onEnd: () => {
-      if (boxX.value < 0 || boxX.value > width - boxSize) {
-        boxX.value = withSpring(0);
-      }
-      if (boxY.value < 0 || boxY.value > height - boxSize) {
-        boxY.value = withSpring(0);
-      }
-    },
-  });
-
-  const handleGesture2 = useAnimatedGestureHandler({
-    onStart: (_, ctx: ContextType) => {
-      ctx.offsetX = box1X.value;
-      ctx.offsetY = box1Y.value;
-    },
-    onActive: (event, ctx) => {
-      box1X.value = event.translationX + ctx.offsetX;
-      box1Y.value = event.translationY + ctx.offsetY;
-    },
-    onEnd: () => {
-      if (box1X.value < 0 || box1X.value > width - boxSize) {
-        box1X.value = withSpring(0);
-      }
-      if (box1Y.value < 0 || box1Y.value > height - boxSize) {
-        box1Y.value = withSpring(0);
-      }
-    },
-  });
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [
-        {
-          translateX: boxX.value,
-        },
-        {
-          translateY: boxY.value,
-        },
-      ],
-    };
-  });
-  const animatedStyle1 = useAnimatedStyle(() => {
-    return {
-      transform: [
-        {
-          translateX: box1X.value,
-        },
-        {
-          translateY: box1Y.value,
-        },
-      ],
-    };
-  });
-  const autoBoxStyle = useAnimatedStyle(() => {
-    return {
-      transform: [
-        {
-          translateX: autoBoxX.value,
-        },
-        {
-          translateY: autoBoxY.value,
-        },
-      ],
-    };
-  });
-  return (
-    <View style={styles.container}>
-      <GameEngine>
-        <PanGestureHandler onGestureEvent={handleGesture}>
-          <Animated.View style={[styles.box, animatedStyle]} />
-        </PanGestureHandler>
-        <PanGestureHandler onGestureEvent={handleGesture2}>
-          <Animated.View style={[styles.box2, animatedStyle1]} />
-        </PanGestureHandler>
-        <Animated.View style={[styles.autoBox, autoBoxStyle]} />
-        <NewBall
-          durationX={10}
-          durationY={2000}
-          initialStartX={10}
-          initialStartY={20}
-          screenWidth={width}
-        />
-        <NewBall
-          durationX={100}
-          durationY={2000}
-          initialStartX={30}
-          initialStartY={150}
-          screenWidth={width}
-          colorOne="yellow"
-          colorTwo="white"
-        />
-        <NewBall
-          durationX={2}
-          durationY={2000}
-          initialStartX={30}
-          initialStartY={250}
-          screenWidth={width}
-          colorOne="black"
-          colorTwo="orange"
-        />
-      </GameEngine>
-    </View>
-  );
-};
-
 export default ViewGameEngine;

@@ -11,49 +11,56 @@ import Animated, {
 } from "react-native-reanimated";
 import { ContextType } from "../../types/types";
 import { BallProps } from "../../interfaces/ballInterface";
-const boxSize = 50;
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#FFF",
-  },
-  ball: {
-    position: "absolute",
-    width: boxSize,
-    height: boxSize,
-    borderRadius: 25,
-    backgroundColor: "#FF0000",
-  },
-});
+const size = 50;
 const NewBall: React.FC<BallProps> = ({
   durationX,
   durationY,
+  ballSize = size,
   colorOne = "red",
   colorTwo = "blue",
-  initialStartX = 0,
-  initialStartY = 0,
+  //   initialStartX = 0,
+  //   initialStartY = 0,
   screenWidth = 200,
+  screenHeight = 400,
+  directionValueX = 1,
+  directionValueY = 1,
+  position,
 }) => {
-  const boxX = useSharedValue(initialStartX);
-  const boxY = useSharedValue(initialStartY);
-  const direction = useSharedValue(1);
+  const [x = 0, y = 0] = position;
+  const boxX = useSharedValue(x);
+  const boxY = useSharedValue(y);
+  const directionX = useSharedValue(directionValueX);
+  const directionY = useSharedValue(directionValueY);
+  const backgroundColor = useSharedValue(colorOne);
   useEffect(() => {
     const intervalId = setInterval(() => {
-      boxX.value = withTiming(boxX.value + 1 * direction.value, {
+      boxX.value = withTiming(boxX.value + 1 * directionX.value, {
         duration: durationX,
       });
-      if (boxX.value > screenWidth - boxSize) {
-        direction.value = -1;
+      boxY.value = withTiming(boxY.value + 1 * directionY.value, {
+        duration: durationY,
+      });
+      backgroundColor.value =
+        boxX.value < screenWidth / 2 ? colorOne : colorTwo;
+      if (boxX.value > screenWidth - ballSize) {
+        directionX.value = -1;
       }
       if (boxX.value < 0) {
-        direction.value = 1;
+        directionX.value = 1;
+      }
+      if (boxY.value > screenHeight - ballSize) {
+        directionY.value = -1;
+      }
+      if (boxY.value < 0) {
+        directionY.value = 1;
       }
     }, 20);
 
     return () => {
       clearInterval(intervalId);
     };
-  }, [boxX]);
+  }, [boxX, boxY]);
+
   const animatedStyle = useAnimatedStyle(() => {
     return {
       transform: [
@@ -64,14 +71,25 @@ const NewBall: React.FC<BallProps> = ({
           translateY: boxY.value,
         },
       ],
-      backgroundColor: boxX.value < screenWidth / 2 ? colorOne : colorTwo,
+      backgroundColor: backgroundColor.value,
     };
   });
+
   return (
     <View>
       <Animated.View style={[styles.ball, animatedStyle]} />
     </View>
   );
 };
-
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  ball: {
+    position: "absolute",
+    width: size,
+    height: size,
+    borderRadius: 25,
+  },
+});
 export default NewBall;
