@@ -97,7 +97,7 @@ const BallAuto: React.FC<BallProps> = ({
   return (
     <Animated.View style={[styles.ball, animatedStyle]}>
       <ImageBackground
-        source={require("../../assets/monsters/mon1.png")}
+        source={require("../../assets/monsters/mon2.png")}
         style={styles.box}
       />
     </Animated.View>

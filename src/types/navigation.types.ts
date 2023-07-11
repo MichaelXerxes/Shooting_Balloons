@@ -8,6 +8,7 @@ export type RootStackParamList = {
   Game: {playerImageName: number;};
   Quiz: { quizType: string; numberQuestions: number };
   EndGame: undefined;
+  CustomGameEngine:undefined;
 
 };
 

@@ -11,9 +11,10 @@ import {
   EndGameScreenNavigationProp,
   SettingsScreenNavigationProp,
   UniversalNavigationProps,
+  RootStackParamList,
 } from "../types/navigation.types";
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<RootStackParamList>();
 
 const MainStackNavigator: React.FC = () => {
   const navigationSettings = useNavigation<SettingsScreenNavigationProp>();

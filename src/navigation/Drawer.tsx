@@ -71,7 +71,7 @@ const NavigationView: React.FC<NavigationViewProps> = ({ drawer }) => {
       style={[styles.container, styles.navigationContainer]}
       resizeMode="cover"
     >
-      <Text style={styles.paragraph}>Quizzes Menu</Text>
+      <Text style={styles.paragraph}>Game Menu</Text>
 
       <TouchableOpacity
         onPress={() => {

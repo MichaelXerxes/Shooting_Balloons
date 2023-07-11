@@ -4,14 +4,17 @@ import {
   GameScreenNavigationProp,
   GameScreenRouteProp,
 } from "../types/navigation.types";
+import { StackScreenProps } from "@react-navigation/stack";
 
+import { RootStackParamList } from "../types/navigation.types";
 import CustomGameEngine from "../game-Engine/CustomGameEngine";
-interface Props {
-  navigation: GameScreenNavigationProp;
-  route: GameScreenRouteProp;
-}
+// interface Props {
+//   navigation: GameScreenNavigationProp;
+//   route: GameScreenRouteProp;
+// }
+type GameScreenProps = StackScreenProps<RootStackParamList, "Game">;
 
-const Game: React.FC<Props> = ({ navigation, route }) => {
+const Game: React.FC<GameScreenProps> = ({ navigation, route }) => {
   const { playerImageName } = route.params;
 
   return (
