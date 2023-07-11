@@ -8,7 +8,7 @@
 
 <p align="center">Here are some images related to the game:</p>
 <p align="center">
-  <img alt="image1" src="https://github.com/MichaelXerxes/Shooting_Balloons/assets/81194285/6adb6fb7-b3a3-4c26-9d65-0f7b53d2d843"   width="200" height="400">
+  <img alt="image1" src="https://github.com/MichaelXerxes/Shooting_Balloons/assets/81194285/13d9f7b6-9336-47c9-a124-ba29deec8701"   width="200" height="400">
  
   <br>
   <em>Drawer </em>
