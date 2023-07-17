@@ -32,3 +32,11 @@
 </p>
 
 ---
+<p align="center">
+  <img alt="image1" src="https://github.com/MichaelXerxes/Shooting_Balloons/assets/81194285/e99c5abf-82c2-4967-81ab-d5bb8433d6a4"   width="200" height="400">
+ 
+  <br>
+  <em>Game Play</em>
+</p>
+
+---
