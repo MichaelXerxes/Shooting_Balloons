@@ -2,9 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import { GameEngine } from "react-native-game-engine";
 import returnEntity from "./entities/GameEntity";
-import { Entities, EntityKey } from "../types/types";
-import { GameEngineUpdate } from "../interfaces/gameEngine";
-
+import { Entities, EntityKey, NewEntities, NewEntityKey } from "../types/types";
+import {
+  GameEngineUpdate,
+  NewEntity,
+  PlayersFreeMoving,
+} from "../interfaces/gameEngine";
+import { newGameEntity } from "./entities/NewGameEntity";
+import { NewEntityArrayKey } from "../types/types";
 const boxSize = 50;
 const { width, height } = Dimensions.get("window");
 interface Props {
@@ -15,50 +20,65 @@ const CustomGameEngine: React.FC<Props> = ({ playerImageName = 1 }) => {
     0, 0,
   ]);
   const movementSystem = (
-    entities: Entities,
+    entities: NewEntities,
     { time, delta }: GameEngineUpdate
   ) => {
-    const {
-      // player,
-      enemy,
-      ball1,
-      ball2,
-    } = entities;
-
     if (time && delta) {
-      //   player.position[0] += player.speed[0] * delta;
-      //   player.position[1] += player.speed[1] * delta;
+      const entityKeys: NewEntityKey[] = ["player", "enemy", "ballAuto"];
 
-      enemy.position[0] += enemy.speed[0] * delta;
-      enemy.position[1] += enemy.speed[1] * delta;
+      entityKeys.forEach((key) => {
+        const entity = entities[key];
+        // Move all freePlayers of each entity
+        entity.freePlayers.forEach((freePlayer: PlayersFreeMoving) => {
+          freePlayer.position[0] += 0.1 * delta;
+          freePlayer.position[1] += 0.1 * delta;
+        });
+      });
     }
 
     return entities;
   };
-  const entities2 = returnEntity({
-    width,
-    height,
-    playerPosition: trackPositions,
-    playerImageName: playerImageName,
-  });
-  const entityKeys: EntityKey[] = [
-    // "player",
+  // const entities2 = returnEntity({
+  //   width,
+  //   height,
+  //   playerPosition: trackPositions,
+  //   playerImageName: playerImageName,
+  // });
+  // const entityKeys: EntityKey[] = [
+  //   // "player",
+  //   // "enemy",
+  //   //"playerMoving",
+  //   // "playerBottomScreen",
+  // ];
+  const NewEntityKeys: NewEntityKey[] = [
+    "player",
     // "enemy",
     //"playerMoving",
     // "playerBottomScreen",
   ];
-
+  const gameState = newGameEntity({
+    width: width,
+    height: height,
+    playerPosition: trackPositions,
+    playerImageName: playerImageName,
+  });
+  console.log(gameState.entities);
   return (
     <View style={styles.container}>
-      <GameEngine systems={[movementSystem]} entities={entities2}>
-        {/* <NewBall position={[0, 0]} durationX={10} durationY={20} /> */}
-        {/* <Enemy position={[100, 100]} /> */}
-        {entityKeys.map((key) => {
-          const entity = entities2[key];
+      <GameEngine systems={[movementSystem]} entities={gameState.entities}>
+        {NewEntityKeys.map((key) => {
+          const entity = gameState.entities[
+            key as keyof NewEntities
+          ] as NewEntity;
           return (
-            <React.Fragment key={key}>
-              {entity.renderer && entity.renderer()}
-            </React.Fragment>
+            entity &&
+            entity.freePlayers.map(
+              (freePlayer: PlayersFreeMoving, index: number) => (
+                <React.Fragment key={`${key}-freePlayer-${index}`}>
+                  {freePlayer.renderer && freePlayer.renderer()}
+                </React.Fragment>
+              )
+            )
           );
         })}
       </GameEngine>

@@ -6,17 +6,8 @@ import React, { useState, useEffect } from "react";
 import PlayerMoving from "../../game-components/characters/PlayerMoving";
 import BallAuto from "../../game-components/balls/BallAuto";
 import BallS from "../../game-components/balls/BallS";
+import { GameEntityState } from "../../interfaces/gameState";
 
-interface GameEntityInterface {
-  players: PlayersInterface[];
-  enemies: EnemisInterface[];
-}
-interface PlayersInterface {
-  player: PlayerProps;
-}
-interface EnemisInterface {
-  enemy: EnemyProps;
-}
 interface EntityInterface {
   width: number;
   height: number;
@@ -24,19 +15,19 @@ interface EntityInterface {
   playerImageName: number;
 }
 
-const newGameEntity = ({
+export const newGameEntity = ({
   width,
   height,
   playerPosition: trackedPosition,
   playerImageName,
-}: EntityInterface): NewEntities => {
+}: EntityInterface): GameEntityState => {
   const [trackPositions, setTrackPositions] =
     useState<[number, number]>(trackedPosition);
   const [entities, setEntities] = useState<NewEntities>({
     player: {
       freePlayers: [
         {
-          position: [0, 0],
+          position: [75, 75],
           radius: 25,
           renderer: () => (
             <PlayerMoving
@@ -52,7 +43,7 @@ const newGameEntity = ({
           ),
         },
         {
-          position: [0, 0],
+          position: [50, 50],
           radius: 25,
           renderer: () => (
             <BallS position={[100, 200]} radius={30} color="red" />
@@ -64,6 +55,7 @@ const newGameEntity = ({
     enemy: { freePlayers: [], bottomPlayers: [] },
     ballAuto: { freePlayers: [], bottomPlayers: [] },
   });
+
   const addEntity = (
     entityType: keyof NewEntities,
     arrayKey: NewEntityArrayKey,
@@ -103,7 +95,9 @@ const newGameEntity = ({
     }));
   };
 
-  return entities;
+  return {
+    entities,
+    addEntity,
+    removeEntity,
+  };
 };
-
-export default newGameEntity;

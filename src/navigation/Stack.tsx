@@ -13,6 +13,7 @@ import {
   UniversalNavigationProps,
   RootStackParamList,
 } from "../types/navigation.types";
+import Scores from "../screens/Scores";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -84,6 +85,15 @@ const MainStackNavigator: React.FC = () => {
         options={{
           header: () => (
             <TopBarComponent navigation={navigationSettings} title="Game" />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Scores"
+        component={Scores}
+        options={{
+          header: () => (
+            <TopBarComponent navigation={navigationSettings} title="Scores" />
           ),
         }}
       />

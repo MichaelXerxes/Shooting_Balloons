@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useDerivedValue } from "react-native-reanimated";
 import { StyleSheet, ImageBackground } from "react-native";
 import { PlayerProps } from "../../interfaces/characters";
 import Animated, {
@@ -6,6 +7,7 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withSpring,
+  runOnJS,
 } from "react-native-reanimated";
 import { ContextType } from "../../types/types";
 import { PanGestureHandler } from "react-native-gesture-handler";
@@ -28,7 +30,14 @@ const PlayerMoving: React.FC<PlayerProps> = ({
   const boxSize = 50;
   const boxX = useSharedValue(x);
   const boxY = useSharedValue(y);
+  //   const boxX = useSharedValue(x);
+  // const boxY = useSharedValue(y);
 
+  // useDerivedValue(() => {
+  //   if (onUpdatePlayerPosition) {
+  //     onUpdatePlayerPosition(boxX.value, boxY.value);
+  //   }
+  // }, [boxX, boxY]);
   const handleGesture = useAnimatedGestureHandler({
     onStart: (_, ctx: ContextType) => {
       ctx.offsetX = boxX.value;

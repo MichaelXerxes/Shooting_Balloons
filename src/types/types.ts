@@ -23,6 +23,7 @@ export type NewEntityKey =
 
 export  type NewEntities = {
     [key in NewEntityKey]: NewEntity;
+    
   };
 
 export type NewEntityArrayKey = 'freePlayers' | 'bottomPlayers' | 'staticEnemies' | 'movingEnemies';

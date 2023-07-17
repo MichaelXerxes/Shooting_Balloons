@@ -9,6 +9,7 @@ export type RootStackParamList = {
   Quiz: { quizType: string; numberQuestions: number };
   EndGame: undefined;
   CustomGameEngine:undefined;
+ // GameOver:undefined;
 
 };
 
@@ -64,6 +65,7 @@ export type QuizScreenRouteProp = RouteProp<RootStackParamList, "Quiz">;
 export type EndGameScreenRouteProp = RouteProp<RootStackParamList, "EndGame">;
 
 export type GameScreenRouteProp = RouteProp<RootStackParamList, "Game">;
+export type ScoresScreenRouteProp = RouteProp<RootStackParamList, "Scores">;
 export type UniversalNavigationProps =
   | HomeScreenNavigationProp
   | SelectCharacterScreenNavigationProp

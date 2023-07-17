@@ -70,6 +70,12 @@ const Home: React.FC<Props> = ({ navigation }) => {
       <TouchableOpacity style={styles.buttonPlay} onPress={() => playGame()}>
         <Text style={styles.testPlayGame}>PLAY GAME</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.buttonPlay}
+        onPress={() => navigation.navigate("Scores")}
+      >
+        <Text style={styles.testPlayGame}>SCORES</Text>
+      </TouchableOpacity>
     </ImageBackground>
   );
 };
